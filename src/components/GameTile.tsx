@@ -44,7 +44,7 @@ const getRoleFontSize = (roleText: string): string => {
 
 const getTileColor = (value: number): string => {
   const colors: Record<number, string> = {
-    0: 'bg-gray-200',
+    0: 'bg-amber-50',
     2: 'bg-amber-100',
     4: 'bg-amber-200',
     8: 'bg-orange-200',
@@ -67,7 +67,7 @@ const getTextColor = (value: number): string => {
 export default function GameTile({ value }: GameTileProps) {
   if (value === 0) {
     return (
-      <div className="w-full h-full bg-gray-200 rounded flex items-center justify-center transition-all duration-200">
+      <div className="w-full h-full bg-amber-50 rounded flex items-center justify-center transition-all duration-200">
       </div>
     )
   }
