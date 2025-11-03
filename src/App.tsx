@@ -69,12 +69,6 @@ function App() {
         {t('restart')}
       </button>
       
-      <div className="w-full max-w-md px-3 sm:px-0 mt-2 pt-2 text-center border-t border-amber-300">
-        <p className="text-[11px] sm:text-xs text-amber-700 leading-snug">
-          {t('roleProgressionHint')}
-        </p>
-      </div>
-      
       <ResetConfirmModal
         isOpen={showResetModal}
         onClose={() => setShowResetModal(false)}
