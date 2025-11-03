@@ -118,25 +118,26 @@ export default function GameBoard({ board, previousBoard, onSwipe }: GameBoardPr
     const boardElement = boardRef.current
     if (!boardElement || !onSwipe) return
 
+    let bodyOverflow = ''
+
     const handleTouchStart = (e: TouchEvent) => {
       const touch = e.touches[0]
       touchStart.current = { x: touch.clientX, y: touch.clientY }
+      
+      bodyOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
     }
 
     const handleTouchMove = (e: TouchEvent) => {
       if (!touchStart.current) return
 
-      const touch = e.touches[0]
-      const deltaX = Math.abs(touch.clientX - touchStart.current.x)
-      const deltaY = Math.abs(touch.clientY - touchStart.current.y)
-      const minSwipeDistance = 10
-
-      if (deltaX > minSwipeDistance || deltaY > minSwipeDistance) {
-        e.preventDefault()
-      }
+      e.preventDefault()
+      e.stopPropagation()
     }
 
     const handleTouchEnd = (e: TouchEvent) => {
+      document.body.style.overflow = bodyOverflow
+      
       if (!touchStart.current) return
 
       const touch = e.changedTouches[0]
@@ -169,14 +170,22 @@ export default function GameBoard({ board, previousBoard, onSwipe }: GameBoardPr
       touchStart.current = null
     }
 
-    boardElement.addEventListener('touchstart', handleTouchStart, { passive: true })
+    const handleTouchCancel = () => {
+      document.body.style.overflow = bodyOverflow
+      touchStart.current = null
+    }
+
+    boardElement.addEventListener('touchstart', handleTouchStart, { passive: false })
     boardElement.addEventListener('touchmove', handleTouchMove, { passive: false })
     boardElement.addEventListener('touchend', handleTouchEnd, { passive: false })
+    boardElement.addEventListener('touchcancel', handleTouchCancel, { passive: false })
 
     return () => {
+      document.body.style.overflow = bodyOverflow
       boardElement.removeEventListener('touchstart', handleTouchStart)
       boardElement.removeEventListener('touchmove', handleTouchMove)
       boardElement.removeEventListener('touchend', handleTouchEnd)
+      boardElement.removeEventListener('touchcancel', handleTouchCancel)
     }
   }, [onSwipe])
 
@@ -186,6 +195,7 @@ export default function GameBoard({ board, previousBoard, onSwipe }: GameBoardPr
       className="bg-amber-800 p-1.5 sm:p-2 rounded-lg inline-block relative max-w-full"
       style={{
         display: 'inline-block',
+        touchAction: 'none',
       }}
     >
       <div 

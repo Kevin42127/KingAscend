@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 防止移動端水平滾動 */
+body {
+  overflow-x: hidden;
+}
+
 /* 文字選取樣式 - 溫暖大地色系 */
 ::selection {
   background-color: #F59E0B; /* amber-500 */
