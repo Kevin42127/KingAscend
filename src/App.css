@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 文字選取樣式 - 溫暖大地色系 */
+::selection {
+  background-color: #F59E0B; /* amber-500 */
+  color: #FFFFFF;
+}
+
+::-moz-selection {
+  background-color: #F59E0B; /* amber-500 */
+  color: #FFFFFF;
+}
+
+/* (removed theme variables) */
+
