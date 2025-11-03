@@ -64,12 +64,6 @@ const getTextColor = (value: number): string => {
   return value <= 8 ? 'text-gray-800' : 'text-white'
 }
 
-const getFontSize = (value: number): string => {
-  if (value >= 1000) return 'text-xl sm:text-2xl lg:text-3xl'
-  if (value >= 100) return 'text-2xl sm:text-3xl lg:text-4xl'
-  return 'text-3xl sm:text-4xl lg:text-5xl'
-}
-
 export default function GameTile({ value }: GameTileProps) {
   if (value === 0) {
     return (

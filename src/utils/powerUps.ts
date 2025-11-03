@@ -48,6 +48,7 @@ export function getPowerUpName(type: PowerUpType): string {
     clearLow: '清除小數字',
     doubleScore: '雙倍分數',
     shuffle: '重新排列',
+    breakObstacle: '破壞障礙',
   }
   return names[type]
 }
@@ -58,6 +59,7 @@ export function getPowerUpDescription(type: PowerUpType): string {
     clearLow: '清除所有 ≤8 的方塊',
     doubleScore: '下一次合併獲得雙倍分數',
     shuffle: '重新排列所有方塊位置',
+    breakObstacle: '破壞一個障礙格',
   }
   return descriptions[type]
 }
