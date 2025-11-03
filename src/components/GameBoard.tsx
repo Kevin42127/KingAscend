@@ -123,6 +123,19 @@ export default function GameBoard({ board, previousBoard, onSwipe }: GameBoardPr
       touchStart.current = { x: touch.clientX, y: touch.clientY }
     }
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!touchStart.current) return
+
+      const touch = e.touches[0]
+      const deltaX = Math.abs(touch.clientX - touchStart.current.x)
+      const deltaY = Math.abs(touch.clientY - touchStart.current.y)
+      const minSwipeDistance = 10
+
+      if (deltaX > minSwipeDistance || deltaY > minSwipeDistance) {
+        e.preventDefault()
+      }
+    }
+
     const handleTouchEnd = (e: TouchEvent) => {
       if (!touchStart.current) return
 
@@ -135,6 +148,9 @@ export default function GameBoard({ board, previousBoard, onSwipe }: GameBoardPr
         touchStart.current = null
         return
       }
+
+      e.preventDefault()
+      e.stopPropagation()
 
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
         if (deltaX > 0) {
@@ -154,10 +170,12 @@ export default function GameBoard({ board, previousBoard, onSwipe }: GameBoardPr
     }
 
     boardElement.addEventListener('touchstart', handleTouchStart, { passive: true })
-    boardElement.addEventListener('touchend', handleTouchEnd, { passive: true })
+    boardElement.addEventListener('touchmove', handleTouchMove, { passive: false })
+    boardElement.addEventListener('touchend', handleTouchEnd, { passive: false })
 
     return () => {
       boardElement.removeEventListener('touchstart', handleTouchStart)
+      boardElement.removeEventListener('touchmove', handleTouchMove)
       boardElement.removeEventListener('touchend', handleTouchEnd)
     }
   }, [onSwipe])
